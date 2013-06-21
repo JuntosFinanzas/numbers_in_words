@@ -1,6 +1,6 @@
 class NumbersInWords::ToNumber
   delegate :to_s, to: :that
-  delegate :powers_of_ten_to_i, :exceptions_to_i, to: :language
+  delegate :powers_of_ten_to_i, :exceptions_to_i, :special_cases_word_to_num, to: :language
   attr_reader :that, :language
 
   def initialize that, language=NumbersInWords.language
@@ -17,7 +17,7 @@ class NumbersInWords::ToNumber
   end
 
   def handle_negative text
-    -1 * (text.gsub(/^minus /, "")).in_numbers if text =~ /^minus /
+    -1 * (text.gsub(/^menos /, "")).in_numbers if text =~ /^menos /
   end
 
   def in_numbers
@@ -45,7 +45,7 @@ class NumbersInWords::ToNumber
   end
 
   def handle_decimals text
-    match = text.match(/\spoint\s/)
+    match = text.match(/\spunto\s/)
     if match
       integer = match.pre_match.in_numbers
 
@@ -64,18 +64,39 @@ class NumbersInWords::ToNumber
   end
 
   #handles simple single word numbers
-  #e.g. one, seven, twenty, eight, thousand etc
+  #e.g. uno, dos, cienta  etc
   def word_to_integer word
     text = word.to_s.chomp.strip
+    puts "hey"
+    puts text
+    puts text.match("poop")==nil
+
 
     exception = exceptions_to_i[text]
     return exception if exception
+
+    #special cases like un is also 1
+    #this dictionary can be added to in constants.rb
+    special = special_cases_word_to_num[text]
+    return special if special
 
     power = powers_of_ten_to_i[text]
     return 10 ** power if power
   end
 
   def word_array_to_integers words
+    copy = words.dup
+    count = -1
+    copy.each { |x| 
+      count++
+      if x.match("veinti")
+        words[count]=["veinti", x.split("veinti")[-1]]
+        words.flatten
+        puts words
+      end 
+       
+    }
+
     words.map { |i| word_to_integer i }.compact
   end
 end

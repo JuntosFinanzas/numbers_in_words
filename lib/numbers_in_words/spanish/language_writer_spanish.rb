@@ -1,15 +1,15 @@
 module NumbersInWords
-  module English
-    class LanguageWriterEnglish < LanguageWriter
+  module Spanish
+    class LanguageWriterSpanish < LanguageWriter
       delegate :to_i, to: :that
 
       def initialize that
         super that
-        @language = "English"
+        @language = "Spanish"
       end
 
       def negative
-        "minus " + (-@that).in_words
+        (-@that).in_words + "negativo"
       end
 
       def in_words
@@ -67,7 +67,7 @@ module NumbersInWords
       def decimals
         int, decimals = NumberGroup.new(@that).split_decimals
         if int
-          out = int.in_words + " point "
+          out = int.in_words + " punto "
           decimals.each do |decimal|
             out << decimal.to_i.in_words + " "
           end
@@ -82,7 +82,7 @@ module NumbersInWords
         output << " " + googols.in_words + " googol"
         if remainder > 0
           prefix = " "
-          prefix << "and " if remainder < 100
+          prefix << "y " if remainder < 100
           output << prefix + remainder.in_words
         end
         output
@@ -95,7 +95,7 @@ module NumbersInWords
           if digits > 0
             prefix = " "
             #no and between thousands and hundreds
-            prefix << "and " if power == 0  and digits < 100
+            prefix << "y " if power == 0  and digits < 100
             output << prefix + digits.in_words
             output << prefix + name unless power == 0
           end
@@ -104,7 +104,5 @@ module NumbersInWords
       end
     end
   end
-
-
-  
 end
+
