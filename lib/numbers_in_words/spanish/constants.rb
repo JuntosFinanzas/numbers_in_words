@@ -26,9 +26,9 @@ module NumbersInWords
         18 => "dieciocho",
         19 => "diecinueve",
 
-        20 => "veinti",
+        20 => "veinte",
         30 => "treinta",
-        40 => "cuarento",
+        40 => "cuarenta",
         50 => "cincuenta",
         60 => "sesenta",
         70 => "setenta",
@@ -48,9 +48,9 @@ module NumbersInWords
          2 => "cien",
          3 => "mil",
          6 => "millones",
-         9 => "millones",
-         12 => "billones",
-         15 => "billones",
+         9 => "mil millones",
+         12 => "billon",
+         15 => "mil billones",
          18 => "trillones",
          21 => "trillones",
          24 => "septillion",
@@ -83,6 +83,31 @@ module NumbersInWords
       }
     end
 
+    def self.hundreds
+        {
+          "doscientos" => ["dos", "cien"],
+          "trescientos"=> ["tres", "cien"],
+          "cuatrocientos"=> ["cuatro", "cien"],
+          "quinientos"=> ["cinco", "cien"],
+          "seiscientos"=> ["seis", "cien"],
+          "setecientos"=> ["siete", "cien"],
+          "ochocientos"=> ["ocho", "cien"],
+          "novecientos"=> ["nueve", "cien"]
+        }
+    end
+
+    def self.tens
+        [
+        "veintei",
+        "treintai",
+        "cuarentai",
+        "cincuentai",
+        "sesentai",
+        "setentai",
+        "ochentai",
+        "noventai"
+        ]
+    end
 
 
     def self.exceptions_to_i
@@ -95,7 +120,13 @@ module NumbersInWords
 
     def self.special_cases_word_to_num
         {
-            "un" =>1
+            "un" =>"uno",
+            "sinco" => "cinco",
+            "dies" => "diez",
+            "quinse" => "quince",
+            "kince" => "quince",
+            "beinte" => "veinte",
+            "docientos" => "doscientos"
 
         }
         

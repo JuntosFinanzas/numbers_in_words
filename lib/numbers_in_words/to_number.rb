@@ -1,6 +1,6 @@
 class NumbersInWords::ToNumber
   delegate :to_s, to: :that
-  delegate :powers_of_ten_to_i, :exceptions_to_i, :special_cases_word_to_num, to: :language
+  delegate :powers_of_ten_to_i, :exceptions_to_i, :special_cases_word_to_num, :hundreds, :tens, to: :language
   attr_reader :that, :language
 
   def initialize that, language=NumbersInWords.language
@@ -17,7 +17,12 @@ class NumbersInWords::ToNumber
   end
 
   def handle_negative text
-    -1 * (text.gsub(/^menos /, "")).in_numbers if text =~ /^menos /
+    if text =~ /^menos /
+      -1 * (text.gsub(/^menos /, "")).in_numbers
+    elsif text =~ / menos$/
+      -1 * (text.gsub(/ menos$/, "")).in_numbers 
+    end
+
   end
 
   def in_numbers
@@ -67,36 +72,32 @@ class NumbersInWords::ToNumber
   #e.g. uno, dos, cienta  etc
   def word_to_integer word
     text = word.to_s.chomp.strip
-    puts "hey"
-    puts text
-    puts text.match("poop")==nil
-
-
     exception = exceptions_to_i[text]
     return exception if exception
-
-    #special cases like un is also 1
-    #this dictionary can be added to in constants.rb
-    special = special_cases_word_to_num[text]
-    return special if special
 
     power = powers_of_ten_to_i[text]
     return 10 ** power if power
   end
 
   def word_array_to_integers words
-    copy = words.dup
-    count = -1
-    copy.each { |x| 
-      count++
-      if x.match("veinti")
-        words[count]=["veinti", x.split("veinti")[-1]]
-        words.flatten
-        puts words
-      end 
-       
-    }
 
+    words.length.times { |i| 
+      if special_cases_word_to_num.keys.include? words[i]
+        words[i]=special_cases_word_to_num[words[i]]
+      end
+      tens.each { |a| 
+        if !words[i].kind_of?(Array) && words[i].match("veinte")
+        words[i]=["veinte", words[i].sub("veinte", "")]
+        elsif !words[i].kind_of?(Array) && words[i].match(a)
+          #have to use substring to remove the "i" at the end
+        words[i]=[ a[0,a.length-1] , words[i].sub(a, "")]
+        end
+      }
+      if !words[i].kind_of?(Array) && words[i].match("cientos")
+        words[i]=hundreds[words[i]]
+      end 
+    }
+    words = words.flatten
     words.map { |i| word_to_integer i }.compact
   end
 end

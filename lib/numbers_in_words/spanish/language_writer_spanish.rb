@@ -9,7 +9,7 @@ module NumbersInWords
       end
 
       def negative
-        (-@that).in_words + "negativo"
+        (-@that).in_words + " negativo"
       end
 
       def in_words
