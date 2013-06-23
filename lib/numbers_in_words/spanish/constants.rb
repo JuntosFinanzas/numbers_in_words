@@ -105,7 +105,15 @@ module NumbersInWords
         "sesentai",
         "setentai",
         "ochentai",
-        "noventai"
+        "noventai",
+        "veintey",
+        "treintay",
+        "cuarentay",
+        "cincuentay",
+        "sesentay",
+        "setentay",
+        "ochentay",
+        "noventay"
         ]
     end
 
