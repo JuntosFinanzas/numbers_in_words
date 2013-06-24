@@ -82,17 +82,25 @@ class NumbersInWords::ToNumber
   def word_array_to_integers words
 
     words.length.times { |i| 
+      #check for misspeled words/ alternative spellings from dictionary in constants.rb and replace them
       if special_cases_word_to_num.keys.include? words[i]
         words[i]=special_cases_word_to_num[words[i]]
       end
+      #since the tens with ones might be together as a word. we separate them
       tens.each { |a| 
-        if !words[i].kind_of?(Array) && words[i].match("veinte")
-        words[i]=["veinte", words[i].sub("veinte", "")]
+        if !words[i].kind_of?(Array) && words[i].match("veint") && !words[i].match("veintei") && !words[i].match("veintey") 
+          if words[i].match("veinte")
+            words[i]=["veinte", words[i].sub("veinte", "")]
+          elsif words[i].match("veinti")
+            words[i]=["veinte", words[i].sub("veinti", "")]
+          end
+          
         elsif !words[i].kind_of?(Array) && words[i].match(a)
           #have to use substring to remove the "i" at the end
         words[i]=[ a[0,a.length-1] , words[i].sub(a, "")]
         end
       }
+      #since the hundreds are be together as a word. we separate them
       if !words[i].kind_of?(Array) && words[i].match("cientos")
         words[i]=hundreds[words[i]]
       end 

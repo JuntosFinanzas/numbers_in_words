@@ -126,6 +126,7 @@ module NumbersInWords
       swap_keys powers_of_ten
     end
 
+    #this is for misspelled words or altenative words and the correct ones.
     def self.special_cases_word_to_num
         {
             "un" =>"uno",
@@ -134,7 +135,8 @@ module NumbersInWords
             "quinse" => "quince",
             "kince" => "quince",
             "beinte" => "veinte",
-            "docientos" => "doscientos"
+            "docientos" => "doscientos",
+            "veinti" => "veintei"
 
         }
         
