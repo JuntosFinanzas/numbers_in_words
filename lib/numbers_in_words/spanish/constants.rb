@@ -127,6 +127,8 @@ module NumbersInWords
     end
 
     #this is for misspelled words or altenative words and the correct ones.
+    #if you add an interpretation for zero remember to modify the following files, 
+    #models/transaction.rb and models/response_strategies/amount_to_transaction_strategy.rb
     def self.special_cases_word_to_num
         {
             "un" =>"uno",
