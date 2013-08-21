@@ -136,7 +136,8 @@ module NumbersInWords
             "kince" => "quince",
             "beinte" => "veinte",
             "docientos" => "doscientos",
-            "veinti" => "veintei"
+            "veinti" => "veintei",
+            "nada" => "cero"
 
         }
         
