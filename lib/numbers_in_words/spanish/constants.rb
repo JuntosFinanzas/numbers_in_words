@@ -131,7 +131,6 @@ module NumbersInWords
     #models/transaction.rb and models/response_strategies/amount_to_transaction_strategy.rb
     def self.special_cases_word_to_num
         {
-            "un" =>"uno",
             "sinco" => "cinco",
             "dies" => "diez",
             "quinse" => "quince",
